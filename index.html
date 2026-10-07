@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en" data-theme="light" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,77 +8,89 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Syne:wght@400;600;700;800&family=Playfair+Display:ital@0;1&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Noto+Sans+Ethiopic:wght@300;400;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
     
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                        display: ['Syne', 'sans-serif'],
-                        serif: ['Playfair Display', 'serif'],
-                    },
-                    colors: {
-                        black: '#050505',
-                        white: '#FAFAFA',
-                        gray: '#888888',
-                    },
-                    transitionTimingFunction: {
-                        'sharp': 'cubic-bezier(0.8, 0, 0.2, 1)',
-                    }
-                }
-            }
-        }
-    </script>
-
     <style>
+        /* CSS Variables for seamless Dark/Light mode transitioning */
+        :root {
+            --bg-primary: #FAFAFA;
+            --bg-secondary: #F0F0F0;
+            --text-primary: #050505;
+            --text-secondary: #555555;
+            --border-color: #E5E5E5;
+            --invert-img: 0;
+        }
+
+        [data-theme="dark"] {
+            --bg-primary: #0A0A0A;
+            --bg-secondary: #141414;
+            --text-primary: #FAFAFA;
+            --text-secondary: #AAAAAA;
+            --border-color: #333333;
+            --invert-img: 1;
+        }
+
         body {
-            background-color: #FAFAFA;
-            color: #050505;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            font-family: 'Inter', sans-serif;
+            transition: background-color 0.6s cubic-bezier(0.8, 0, 0.2, 1), 
+                        color 0.6s cubic-bezier(0.8, 0, 0.2, 1);
             overflow-x: hidden;
         }
 
+        /* Support for Amharic Script */
+        html[lang="am"] body {
+            font-family: 'Noto Sans Ethiopic', sans-serif;
+        }
+
+        h1, h2, h3, .font-serif {
+            font-family: 'Playfair Display', serif;
+        }
+        
+        html[lang="am"] h1, 
+        html[lang="am"] h2, 
+        html[lang="am"] h3, 
+        html[lang="am"] .font-serif {
+            font-family: 'Noto Sans Ethiopic', sans-serif;
+            font-weight: 600;
+        }
+
         ::selection {
-            background-color: #050505;
-            color: #FAFAFA;
+            background-color: var(--text-primary);
+            color: var(--bg-primary);
         }
 
-        /* Sharp Lines */
-        .line-x { border-bottom: 1px solid #050505; }
-        .line-y { border-right: 1px solid #050505; }
-        .line-x-white { border-bottom: 1px solid #FAFAFA; }
+        /* Layout & Component Utilities */
+        .theme-border { border-color: var(--border-color); transition: border-color 0.6s; }
+        .theme-bg-sec { background-color: var(--bg-secondary); transition: background-color 0.6s; }
+        .theme-text-sec { color: var(--text-secondary); transition: color 0.6s; }
 
-        /* Reveal Animations */
-        .reveal {
-            opacity: 0;
-            transform: translateY(30px) scale(0.98);
-            transition: opacity 0.8s cubic-bezier(0.8, 0, 0.2, 1), 
-                        transform 0.8s cubic-bezier(0.8, 0, 0.2, 1);
+        .nav-logo {
+            height: 40px;
+            width: auto;
+            object-fit: contain;
+            /* If the logo is black text on transparent, invert it in dark mode */
+            filter: invert(var(--invert-img));
+            transition: filter 0.6s ease;
         }
 
-        .reveal.active {
-            opacity: 1;
-            transform: translateY(0) scale(1);
-        }
-
-        /* Sharp Image Hover */
         .img-container {
             overflow: hidden;
             position: relative;
         }
         
         .img-container img {
-            transition: transform 0.6s cubic-bezier(0.8, 0, 0.2, 1), filter 0.6s ease;
+            transition: transform 0.8s cubic-bezier(0.8, 0, 0.2, 1), filter 0.8s ease;
             filter: grayscale(100%);
         }
         
         .img-container:hover img {
-            transform: scale(1.03);
+            transform: scale(1.05);
             filter: grayscale(0%);
         }
 
-        /* Custom underline for navigation */
+        /* Link Underline Effect */
         .link-hover {
             position: relative;
             text-decoration: none;
@@ -89,11 +101,11 @@
         .link-hover::after {
             content: '';
             position: absolute;
-            bottom: 0;
+            bottom: -2px;
             left: 0;
             width: 100%;
             height: 1px;
-            background-color: currentColor;
+            background-color: var(--text-primary);
             transform: translateX(-101%);
             transition: transform 0.4s cubic-bezier(0.8, 0, 0.2, 1);
         }
@@ -102,134 +114,152 @@
             transform: translateX(0);
         }
 
-        /* Logo Sizing */
-        .nav-logo {
-            height: 48px; /* Adjustable base size */
-            width: auto;
-            object-fit: contain;
+        /* Buttons */
+        .btn-outline {
+            border: 1px solid var(--text-primary);
+            color: var(--text-primary);
+            background: transparent;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            transition: color 0.4s ease;
+        }
+        
+        .btn-outline::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-color: var(--text-primary);
+            transform: translateY(100%);
+            transition: transform 0.4s cubic-bezier(0.8, 0, 0.2, 1);
+            z-index: -1;
+        }
+        
+        .btn-outline:hover { color: var(--bg-primary); }
+        .btn-outline:hover::before { transform: translateY(0); }
+
+        /* Form Inputs */
+        .theme-input {
+            background: transparent;
+            border-bottom: 1px solid var(--border-color);
+            color: var(--text-primary);
+            transition: border-color 0.3s;
+        }
+        .theme-input:focus {
+            outline: none;
+            border-bottom-color: var(--text-primary);
+        }
+        
+        /* Reveal Animation */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s cubic-bezier(0.8, 0, 0.2, 1);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
         }
     </style>
 </head>
-<body class="antialiased font-sans">
+<body class="antialiased">
 
-    <nav class="fixed w-full top-0 z-50 bg-white/90 backdrop-blur-md line-x transition-transform duration-500" id="navbar">
+    <nav class="fixed w-full top-0 z-50 backdrop-blur-md border-b theme-border bg-[var(--bg-primary)]/80 transition-transform duration-500" id="navbar">
         <div class="max-w-[90rem] mx-auto px-6 py-4 flex justify-between items-center">
             
             <a href="#" class="flex items-center z-50">
-                <img src="assets/logo.jpg" alt="ALAS Logo" class="nav-logo">
+                <img src="assets/logo.jpg" alt="ALAS Logo" id="brand-logo" class="nav-logo">
             </a>
             
-            <div class="hidden md:flex items-center space-x-12 text-sm uppercase tracking-[0.1em] font-medium">
-                <a href="#bespoke" class="link-hover">Bespoke Tailoring</a>
-                <a href="#content" class="link-hover">Content Creation</a>
-                <a href="#portfolio" class="link-hover">Portfolio</a>
-                <a href="#contact" class="px-6 py-2 bg-black text-white hover:bg-white hover:text-black border border-black transition-colors duration-300 sharp">Contact</a>
+            <!-- Desktop Nav Links -->
+            <div class="hidden md:flex items-center space-x-10 text-xs tracking-[0.15em] uppercase">
+                <a href="#home" class="link-hover translate" data-en="Home" data-am="ዋና ገጽ">Home</a>
+                <a href="#about" class="link-hover translate" data-en="About" data-am="ስለ እኔ">About</a>
+                <a href="#portfolio" class="link-hover translate" data-en="Portfolio" data-am="ስራዎቼ">Portfolio</a>
+                <a href="#contact" class="link-hover translate" data-en="Contact" data-am="አግኙኝ">Contact</a>
             </div>
 
-            <!-- Mobile Toggle -->
-            <button id="mobile-btn" class="md:hidden flex flex-col justify-center items-center w-8 h-8 z-50 focus:outline-none group">
-                <span class="w-full h-[1.5px] bg-black mb-1.5 transition-transform duration-300 origin-right group-hover:w-3/4"></span>
-                <span class="w-full h-[1.5px] bg-black transition-transform duration-300 origin-right"></span>
-            </button>
+            <!-- Toggles (Theme & Language) -->
+            <div class="flex items-center space-x-6 z-50">
+                <!-- Language Toggle -->
+                <button id="lang-toggle" class="text-xs font-medium uppercase tracking-widest hover:opacity-60 transition-opacity flex items-center gap-2">
+                    <span id="lang-indicator">EN</span>
+                    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129"></path></svg>
+                </button>
+                
+                <!-- Theme Toggle -->
+                <button id="theme-toggle" class="hover:opacity-60 transition-opacity">
+                    <!-- Sun Icon -->
+                    <svg id="icon-sun" class="w-5 h-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                    <!-- Moon Icon -->
+                    <svg id="icon-moon" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
+                </button>
+
+                <!-- Mobile Menu Button -->
+                <button id="mobile-btn" class="md:hidden flex flex-col justify-center items-center w-6 h-6 focus:outline-none">
+                    <span class="w-full h-[1px] bg-[var(--text-primary)] mb-1.5 transition-all duration-300"></span>
+                    <span class="w-full h-[1px] bg-[var(--text-primary)] transition-all duration-300"></span>
+                </button>
+            </div>
         </div>
 
         <!-- Mobile Menu -->
-        <div id="mobile-menu" class="fixed inset-0 bg-black text-white flex flex-col justify-center px-8 opacity-0 pointer-events-none transition-opacity duration-500 z-40">
-            <div class="flex flex-col space-y-8 text-4xl font-display uppercase tracking-widest">
-                <a href="#bespoke" class="mobile-link hover:text-gray transition-colors">Bespoke</a>
-                <a href="#content" class="mobile-link hover:text-gray transition-colors">Content</a>
-                <a href="#portfolio" class="mobile-link hover:text-gray transition-colors">Gallery</a>
-                <a href="#contact" class="mobile-link hover:text-gray transition-colors">Contact</a>
+        <div id="mobile-menu" class="fixed inset-0 bg-[var(--bg-primary)] flex flex-col justify-center px-8 opacity-0 pointer-events-none transition-opacity duration-500 z-40">
+            <div class="flex flex-col space-y-8 text-3xl font-serif">
+                <a href="#home" class="mobile-link translate" data-en="Home" data-am="ዋና ገጽ">Home</a>
+                <a href="#about" class="mobile-link translate" data-en="About" data-am="ስለ እኔ">About</a>
+                <a href="#portfolio" class="mobile-link translate" data-en="Portfolio" data-am="ስራዎቼ">Portfolio</a>
+                <a href="#contact" class="mobile-link translate" data-en="Contact" data-am="አግኙኝ">Contact</a>
             </div>
         </div>
     </nav>
 
-    <header class="min-h-screen pt-24 flex flex-col">
-        <div class="flex-1 grid grid-cols-1 lg:grid-cols-12 max-w-[90rem] mx-auto w-full px-6">
+    <main id="home" class="min-h-screen pt-24 flex items-center relative overflow-hidden">
+        <div class="max-w-[90rem] mx-auto w-full px-6 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center relative z-10">
             
-            <div class="lg:col-span-7 flex flex-col justify-center py-12 lg:pr-12 relative z-10 reveal">
-                <p class="text-xs uppercase tracking-[0.3em] text-gray mb-8 font-medium">Bekalu / Tailor & Creator</p>
-                <h1 class="text-7xl md:text-[8rem] lg:text-[10rem] font-display font-bold leading-[0.85] tracking-tighter mb-8 uppercase">
-                    ALAS.
+            <div class="reveal">
+                <p class="text-xs uppercase tracking-[0.3em] theme-text-sec mb-6 translate" data-en="Bekalu / ALAS" data-am="በቃሉ / አላስ">Bekalu / ALAS</p>
+                <h1 class="text-6xl md:text-8xl lg:text-[7rem] font-serif leading-[1.1] mb-8 translate" data-en="Welcome to ALAS" data-am="እንኳን ወደ ALAS በደህና መጡ">
+                    Welcome to ALAS
                 </h1>
-                <p class="text-xl md:text-2xl font-serif italic text-black/80 max-w-lg mb-12">
-                    Defining modern elegance through meticulous craftsmanship and striking visual narratives.
+                <p class="text-xl md:text-2xl theme-text-sec max-w-lg mb-12 translate" data-en="Tailor & Content Creator" data-am="ልብስ ሰፊ እና የይዘት ፈጣሪ">
+                    Tailor & Content Creator
                 </p>
-                <div class="flex gap-6 items-center">
-                    <a href="#portfolio" class="text-sm font-medium uppercase tracking-[0.1em] link-hover">View Portfolio</a>
-                    <span class="w-12 h-[1px] bg-black"></span>
-                </div>
+                <a href="#portfolio" class="inline-block px-10 py-4 btn-outline text-sm uppercase tracking-widest translate" data-en="Explore Work" data-am="ስራዎችን አስስ">
+                    Explore Work
+                </a>
             </div>
 
-            <div class="lg:col-span-5 relative h-[60vh] lg:h-auto pb-12 lg:pb-0 reveal" style="transition-delay: 0.2s;">
-                <div class="absolute inset-0 lg:inset-y-12 lg:-right-6 img-container bg-gray">
-                    <img src="https://images.unsplash.com/photo-1593032465175-481ac7f401a0?auto=format&fit=crop&w=1600&q=80" alt="Editorial Suit" class="w-full h-full object-cover object-top" />
+            <div class="relative h-[60vh] lg:h-[80vh] reveal" style="transition-delay: 0.2s;">
+                <div class="absolute inset-0 img-container">
+                    <img src="https://images.unsplash.com/photo-1594938298596-70f594f61362?auto=format&fit=crop&w=1200&q=80" alt="Tailoring Editorial" class="w-full h-full object-cover" />
                 </div>
             </div>
         </div>
-        <div class="w-full line-x"></div>
-    </header>
+    </main>
 
-    <section id="bespoke" class="py-32 relative">
+    <section id="about" class="py-32 theme-bg-sec">
         <div class="max-w-[90rem] mx-auto px-6">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-16 lg:gap-32 items-center">
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-16 items-center">
                 
-                <div class="img-container h-[70vh] reveal">
-                    <img src="https://images.unsplash.com/photo-1556905055-8f358a7a47b2?auto=format&fit=crop&w=1200&q=80" alt="Tailoring Process" class="w-full h-full object-cover" />
+                <div class="md:col-span-5 h-[70vh] img-container reveal">
+                    <img src="https://images.unsplash.com/photo-1617137968427-85924c800a22?auto=format&fit=crop&w=1000&q=80" alt="Content Creation" class="w-full h-full object-cover" />
                 </div>
 
-                <div class="reveal" style="transition-delay: 0.1s;">
+                <div class="md:col-span-7 lg:pl-12 reveal" style="transition-delay: 0.1s;">
                     <div class="flex items-center gap-4 mb-8">
                         <span class="text-xs uppercase tracking-[0.2em] font-bold">01</span>
-                        <div class="flex-1 h-[1px] bg-black"></div>
+                        <div class="flex-1 h-[1px] bg-[var(--text-primary)]"></div>
                     </div>
-                    <h2 class="text-5xl md:text-7xl font-display font-bold uppercase tracking-tighter mb-8">
-                        Bespoke <br>Tailoring
-                    </h2>
-                    <div class="space-y-6 text-black/80 font-serif text-lg leading-relaxed">
-                        <p>
-                            Every garment crafted under the ALAS label begins with a conversation and precise measurements. It is an intimate process where traditional sartorial techniques meet contemporary silhouettes.
+                    <h2 class="text-5xl md:text-7xl font-serif mb-8 translate" data-en="About" data-am="ስለ እኔ">About</h2>
+                    <div class="space-y-8 text-lg md:text-xl leading-relaxed theme-text-sec">
+                        <p class="translate" data-en="Crafting modern elegance through meticulous tailoring and striking visual narratives." data-am="በጥንቃቄ በተሰሩ ልብሶች እና ማራኪ ምስላዊ ትረካዎች ዘመናዊ ውበትን መፍጠር።">
+                            Crafting modern elegance through meticulous tailoring and striking visual narratives.
                         </p>
-                        <p>
-                            From selecting premium wools and imported linens to the final hand-stitched lapel, I ensure that your clothing is not merely worn, but experienced—a perfect architectural extension of the individual.
+                        <p class="translate" data-en="Every garment crafted begins with a conversation. It is an intimate process where traditional sartorial techniques meet contemporary silhouettes. Beyond creating the garment, I conceptualize and direct the digital narrative that surrounds it." data-am="እያንዳንዱ የሚሰፋ ልብስ የሚጀምረው በውይይት ነው። ባህላዊ የልብስ ስፌት ጥበብ ከዘመናዊ ቅርጾች ጋር የሚገናኝበት ጥልቅ ሂደት ነው። ልብሱን ከመፍጠር ባሻገር፣ በዙሪያው ያለውን ዲጂታል ትረካ አስባለሁ እና እመራለሁ።">
+                            Every garment crafted begins with a conversation. It is an intimate process where traditional sartorial techniques meet contemporary silhouettes. Beyond creating the garment, I conceptualize and direct the digital narrative that surrounds it.
                         </p>
                     </div>
-                    <a href="#contact" class="inline-block mt-12 px-8 py-4 bg-black text-white text-xs uppercase tracking-[0.15em] font-medium hover:bg-white hover:text-black border border-black transition-all duration-300">
-                        Book a Fitting
-                    </a>
-                </div>
-
-            </div>
-        </div>
-    </section>
-
-    <section id="content" class="py-32 bg-black text-white relative">
-        <div class="max-w-[90rem] mx-auto px-6">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-16 lg:gap-32 items-center">
-                
-                <div class="order-2 md:order-1 reveal" style="transition-delay: 0.1s;">
-                    <div class="flex items-center gap-4 mb-8">
-                        <span class="text-xs uppercase tracking-[0.2em] font-bold">02</span>
-                        <div class="flex-1 h-[1px] bg-white"></div>
-                    </div>
-                    <h2 class="text-5xl md:text-7xl font-display font-bold uppercase tracking-tighter mb-8">
-                        Content <br>Creation
-                    </h2>
-                    <div class="space-y-6 text-white/80 font-serif text-lg leading-relaxed">
-                        <p>
-                            In the modern era, fashion exists in motion. Beyond creating the garment, I conceptualize and direct the digital narrative that surrounds it.
-                        </p>
-                        <p>
-                            Through high-end videography, editorial styling, and engaging social media curation, ALAS documents the lifestyle of the contemporary gentleman. We don't just make clothes; we build the world they inhabit.
-                        </p>
-                    </div>
-                    <a href="#contact" class="inline-block mt-12 px-8 py-4 bg-white text-black text-xs uppercase tracking-[0.15em] font-medium hover:bg-black hover:text-white border border-white transition-all duration-300">
-                        Discuss Collaboration
-                    </a>
-                </div>
-
-                <div class="order-1 md:order-2 img-container h-[70vh] reveal">
-                    <img src="https://images.unsplash.com/photo-1617137968427-85924c800a22?auto=format&fit=crop&w=1200&q=80" alt="Content Creation" class="w-full h-full object-cover" />
                 </div>
 
             </div>
@@ -238,195 +268,174 @@
 
     <section id="portfolio" class="py-32">
         <div class="max-w-[90rem] mx-auto px-6">
-            <div class="flex flex-col md:flex-row md:items-end justify-between mb-16 reveal">
+            <div class="mb-16 reveal text-center">
+                <span class="text-xs uppercase tracking-[0.2em] theme-text-sec block mb-4 translate" data-en="The Archive" data-am="ማህደሩ">The Archive</span>
+                <h2 class="text-6xl md:text-8xl font-serif translate" data-en="Portfolio" data-am="ስራዎቼ">Portfolio</h2>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Gallery Item 1 -->
+                <div class="h-[60vh] img-container reveal">
+                    <img src="https://images.unsplash.com/photo-1593032465175-481ac7f401a0?auto=format&fit=crop&w=800&q=80" alt="Suit Detail" class="w-full h-full object-cover">
+                </div>
+                <!-- Gallery Item 2 -->
+                <div class="h-[60vh] img-container reveal" style="transition-delay: 0.1s;">
+                    <img src="https://images.unsplash.com/photo-1556905055-8f358a7a47b2?auto=format&fit=crop&w=800&q=80" alt="Tailoring Process" class="w-full h-full object-cover">
+                </div>
+                <!-- Gallery Item 3 -->
+                <div class="h-[60vh] img-container reveal" style="transition-delay: 0.2s;">
+                    <img src="https://images.unsplash.com/photo-1534030347209-467a5b0ad3e6?auto=format&fit=crop&w=800&q=80" alt="Editorial Fashion" class="w-full h-full object-cover">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="py-32 border-t theme-border theme-bg-sec">
+        <div class="max-w-4xl mx-auto px-6 text-center reveal">
+            <h2 class="text-5xl md:text-7xl font-serif mb-6 translate" data-en="Contact" data-am="አግኙኝ">Contact</h2>
+            <p class="theme-text-sec text-xl mb-16 translate" data-en="Get in touch for bespoke fittings and collaborations." data-am="ለልዩ ልብስ ስፌት እና አብሮ ለመስራት ያግኙን።">
+                Get in touch for bespoke fittings and collaborations.
+            </p>
+
+            <form class="space-y-10 text-left" onsubmit="event.preventDefault();">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+                    <div>
+                        <label class="block text-xs uppercase tracking-widest mb-2 translate" data-en="Name" data-am="ስም">Name</label>
+                        <input type="text" class="w-full theme-input py-3 text-lg" required>
+                    </div>
+                    <div>
+                        <label class="block text-xs uppercase tracking-widest mb-2 translate" data-en="Email" data-am="ኢሜል">Email</label>
+                        <input type="email" class="w-full theme-input py-3 text-lg" required>
+                    </div>
+                </div>
                 <div>
-                    <span class="text-xs uppercase tracking-[0.2em] font-bold block mb-4">03 // The Archive</span>
-                    <h2 class="text-6xl md:text-8xl font-display font-bold uppercase tracking-tighter">Gallery</h2>
+                    <label class="block text-xs uppercase tracking-widest mb-2 translate" data-en="Message" data-am="መልእክት">Message</label>
+                    <textarea rows="4" class="w-full theme-input py-3 text-lg resize-none" required></textarea>
                 </div>
-            </div>
-
-            <!-- Masonry-style Grid -->
-            <div class="grid grid-cols-1 md:grid-cols-12 gap-6 lg:gap-10">
-                
-                <!-- Item 1 (Large) -->
-                <div class="md:col-span-8 h-[60vh] md:h-[80vh] img-container group reveal">
-                    <img src="https://images.unsplash.com/photo-1594938298596-70f594f61362?auto=format&fit=crop&w=1600&q=80" alt="Tuxedo" class="w-full h-full object-cover" />
-                    <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center">
-                        <span class="text-white font-display text-2xl uppercase tracking-widest">Midnight Tuxedo</span>
-                    </div>
+                <div class="text-center pt-8">
+                    <button type="submit" class="px-12 py-4 btn-outline text-sm uppercase tracking-widest font-medium translate" data-en="Submit" data-am="ላክ">
+                        Submit
+                    </button>
                 </div>
-
-                <!-- Item 2 (Small Portrait) -->
-                <div class="md:col-span-4 h-[60vh] md:h-[80vh] img-container group reveal" style="transition-delay: 0.1s;">
-                    <img src="https://images.unsplash.com/photo-1592878904946-b3cd8ae243d0?auto=format&fit=crop&w=800&q=80" alt="Linen Suit" class="w-full h-full object-cover object-top" />
-                    <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center">
-                        <span class="text-white font-display text-xl uppercase tracking-widest">Summer Linen</span>
-                    </div>
-                </div>
-
-                <!-- Item 3 (Small Landscape) -->
-                <div class="md:col-span-5 h-[50vh] img-container group reveal">
-                    <img src="https://images.unsplash.com/photo-1598808503746-f34c53b9323e?auto=format&fit=crop&w=1000&q=80" alt="Details" class="w-full h-full object-cover" />
-                    <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center">
-                        <span class="text-white font-display text-xl uppercase tracking-widest">Sartorial Details</span>
-                    </div>
-                </div>
-
-                <!-- Item 4 (Medium) -->
-                <div class="md:col-span-7 h-[50vh] img-container group reveal" style="transition-delay: 0.1s;">
-                    <img src="https://images.unsplash.com/photo-1534030347209-467a5b0ad3e6?auto=format&fit=crop&w=1200&q=80" alt="Editorial Styling" class="w-full h-full object-cover" />
-                    <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center">
-                        <span class="text-white font-display text-2xl uppercase tracking-widest">Editorial Campaign</span>
-                    </div>
-                </div>
-
-            </div>
+            </form>
         </div>
     </section>
 
-    <section id="contact" class="py-32 bg-black text-white line-x-white">
-        <div class="max-w-[90rem] mx-auto px-6">
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16">
-                
-                <div class="reveal">
-                    <span class="text-xs uppercase tracking-[0.2em] font-bold text-gray block mb-4">04 // Connect</span>
-                    <h2 class="text-6xl md:text-8xl font-display font-bold uppercase tracking-tighter mb-8">Inquire</h2>
-                    <p class="text-white/70 font-serif text-xl max-w-md">
-                        Whether you seek a bespoke garment fitting or a creative partnership, reach out to start the dialogue.
-                    </p>
-                </div>
-
-                <div class="reveal" style="transition-delay: 0.1s;">
-                    <form class="space-y-12" onsubmit="event.preventDefault();">
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
-                            <div class="relative">
-                                <input type="text" id="name" class="w-full bg-transparent border-b border-white/30 py-4 text-lg focus:outline-none focus:border-white transition-colors peer placeholder-transparent" placeholder="Name" required>
-                                <label for="name" class="absolute left-0 -top-6 text-xs uppercase tracking-widest text-gray transition-all peer-placeholder-shown:text-base peer-placeholder-shown:top-4 peer-placeholder-shown:text-white/50 peer-focus:-top-6 peer-focus:text-xs peer-focus:text-white">Full Name</label>
-                            </div>
-                            <div class="relative">
-                                <input type="email" id="email" class="w-full bg-transparent border-b border-white/30 py-4 text-lg focus:outline-none focus:border-white transition-colors peer placeholder-transparent" placeholder="Email" required>
-                                <label for="email" class="absolute left-0 -top-6 text-xs uppercase tracking-widest text-gray transition-all peer-placeholder-shown:text-base peer-placeholder-shown:top-4 peer-placeholder-shown:text-white/50 peer-focus:-top-6 peer-focus:text-xs peer-focus:text-white">Email Address</label>
-                            </div>
-                        </div>
-
-                        <div class="relative">
-                            <select id="inquiry-type" class="w-full bg-transparent border-b border-white/30 py-4 text-lg focus:outline-none focus:border-white transition-colors text-white appearance-none rounded-none cursor-pointer">
-                                <option value="" disabled selected class="text-black bg-white">Select Inquiry Type</option>
-                                <option value="bespoke" class="text-black bg-white">Bespoke Tailoring</option>
-                                <option value="content" class="text-black bg-white">Content Collaboration</option>
-                                <option value="press" class="text-black bg-white">Press & Media</option>
-                            </select>
-                            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-white">
-                                <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-                            </div>
-                        </div>
-
-                        <div class="relative">
-                            <textarea id="message" rows="1" class="w-full bg-transparent border-b border-white/30 py-4 text-lg focus:outline-none focus:border-white transition-colors peer placeholder-transparent resize-none" placeholder="Message" required></textarea>
-                            <label for="message" class="absolute left-0 -top-6 text-xs uppercase tracking-widest text-gray transition-all peer-placeholder-shown:text-base peer-placeholder-shown:top-4 peer-placeholder-shown:text-white/50 peer-focus:-top-6 peer-focus:text-xs peer-focus:text-white">Message Details</label>
-                        </div>
-
-                        <button type="submit" class="w-full md:w-auto px-12 py-5 bg-white text-black font-display font-bold uppercase tracking-widest hover:bg-transparent hover:text-white border border-white transition-colors duration-300 sharp">
-                            Submit Request
-                        </button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <footer class="bg-black text-white py-12">
+    <footer class="py-12 border-t theme-border">
         <div class="max-w-[90rem] mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-6">
-            <h2 class="text-3xl font-display font-bold uppercase tracking-widest">ALAS.</h2>
+            <h2 class="text-2xl font-serif tracking-widest">ALAS.</h2>
             
-            <div class="flex gap-8 text-sm uppercase tracking-widest font-medium text-gray">
-                <a href="#" class="hover:text-white transition-colors">Instagram</a>
-                <a href="#" class="hover:text-white transition-colors">TikTok</a>
-                <a href="#" class="hover:text-white transition-colors">YouTube</a>
+            <div class="flex gap-8 text-xs uppercase tracking-widest font-medium theme-text-sec">
+                <a href="#" class="hover:text-[var(--text-primary)] transition-colors">Instagram</a>
+                <a href="#" class="hover:text-[var(--text-primary)] transition-colors">TikTok</a>
             </div>
 
-            <p class="text-xs uppercase tracking-[0.2em] text-gray">&copy; <span id="year"></span> Bekalu.</p>
+            <p class="text-xs uppercase tracking-[0.2em] theme-text-sec">&copy; <span id="year"></span> Bekalu.</p>
         </div>
     </footer>
 
     <script>
-        // Set current year
+        // Set year
         document.getElementById('year').textContent = new Date().getFullYear();
 
-        // Navbar hidden on scroll down, show on scroll up
-        let lastScrollTop = 0;
-        const navbar = document.getElementById('navbar');
-        
-        window.addEventListener('scroll', function() {
-            let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-            if (scrollTop > lastScrollTop && scrollTop > 100) {
-                // Scroll down
-                navbar.style.transform = 'translateY(-100%)';
-            } else {
-                // Scroll up
-                navbar.style.transform = 'translateY(0)';
-            }
-            lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
-        }, false);
-
-        // Mobile Menu Toggle
-        const btn = document.getElementById('mobile-btn');
-        const menu = document.getElementById('mobile-menu');
-        const spans = btn.querySelectorAll('span');
-        const links = document.querySelectorAll('.mobile-link');
-        let isOpen = false;
-
-        function toggleMenu() {
-            isOpen = !isOpen;
-            if (isOpen) {
-                menu.classList.remove('opacity-0', 'pointer-events-none');
-                menu.classList.add('opacity-100', 'pointer-events-auto');
-                
-                spans[0].style.transform = 'rotate(45deg) translate(2px, 3px)';
-                spans[1].style.transform = 'rotate(-45deg) translate(2px, -3px)';
-                
-                // Switch button color for dark menu
-                spans.forEach(s => s.classList.replace('bg-black', 'bg-white'));
-                document.body.style.overflow = 'hidden';
-            } else {
-                menu.classList.remove('opacity-100', 'pointer-events-auto');
-                menu.classList.add('opacity-0', 'pointer-events-none');
-                
-                spans[0].style.transform = 'none';
-                spans[1].style.transform = 'none';
-                
-                // Revert button color
-                spans.forEach(s => s.classList.replace('bg-white', 'bg-black'));
-                document.body.style.overflow = '';
-            }
-        }
-
-        btn.addEventListener('click', toggleMenu);
-        links.forEach(link => link.addEventListener('click', () => { if(isOpen) toggleMenu(); }));
-
-        // Scroll Reveal Animation via Intersection Observer
+        // Reveal Animation Setup
         const revealElements = document.querySelectorAll('.reveal');
-        const revealOptions = {
-            threshold: 0.15,
-            rootMargin: "0px 0px -50px 0px"
-        };
-
-        const revealObserver = new IntersectionObserver(function(entries, observer) {
+        const revealObserver = new IntersectionObserver((entries, observer) => {
             entries.forEach(entry => {
-                if (!entry.isIntersecting) return;
-                entry.target.classList.add('active');
-                observer.unobserve(entry.target);
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    observer.unobserve(entry.target);
+                }
             });
-        }, revealOptions);
+        }, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
 
         revealElements.forEach(el => revealObserver.observe(el));
 
-        // Auto-expand textarea
-        const textarea = document.getElementById('message');
-        textarea.addEventListener('input', function() {
-            this.style.height = 'auto';
-            this.style.height = (this.scrollHeight) + 'px';
+        // Mobile Menu Setup
+        const mobileBtn = document.getElementById('mobile-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const spans = mobileBtn.querySelectorAll('span');
+        const mobileLinks = document.querySelectorAll('.mobile-link');
+        let menuOpen = false;
+
+        function toggleMenu() {
+            menuOpen = !menuOpen;
+            if (menuOpen) {
+                mobileMenu.classList.remove('opacity-0', 'pointer-events-none');
+                mobileMenu.classList.add('opacity-100', 'pointer-events-auto');
+                spans[0].style.transform = 'rotate(45deg) translate(4px, 4px)';
+                spans[1].style.transform = 'rotate(-45deg) translate(4px, -4px)';
+                document.body.style.overflow = 'hidden';
+            } else {
+                mobileMenu.classList.remove('opacity-100', 'pointer-events-auto');
+                mobileMenu.classList.add('opacity-0', 'pointer-events-none');
+                spans[0].style.transform = 'none';
+                spans[1].style.transform = 'none';
+                document.body.style.overflow = '';
+            }
+        }
+        mobileBtn.addEventListener('click', toggleMenu);
+        mobileLinks.forEach(link => link.addEventListener('click', () => { if(menuOpen) toggleMenu(); }));
+
+        // Navbar Hide on Scroll Down
+        let lastScrollTop = 0;
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            if (scrollTop > lastScrollTop && scrollTop > 100) {
+                navbar.style.transform = 'translateY(-100%)';
+            } else {
+                navbar.style.transform = 'translateY(0)';
+            }
+            lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
         });
+
+        // Theme Toggle Logic
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        const iconSun = document.getElementById('icon-sun');
+        const iconMoon = document.getElementById('icon-moon');
+        let currentTheme = 'light';
+
+        themeToggleBtn.addEventListener('click', () => {
+            currentTheme = currentTheme === 'light' ? 'dark' : 'light';
+            document.documentElement.setAttribute('data-theme', currentTheme);
+            
+            if(currentTheme === 'dark') {
+                iconMoon.classList.add('hidden');
+                iconSun.classList.remove('hidden');
+            } else {
+                iconSun.classList.add('hidden');
+                iconMoon.classList.remove('hidden');
+            }
+        });
+
+        // Bilingual Toggle Logic
+        const langToggleBtn = document.getElementById('lang-toggle');
+        const langIndicator = document.getElementById('lang-indicator');
+        const translatableElements = document.querySelectorAll('.translate');
+        let currentLang = 'en'; // 'en' or 'am'
+
+        langToggleBtn.addEventListener('click', () => {
+            // Fade out text temporarily for smooth transition
+            translatableElements.forEach(el => el.style.opacity = '0');
+            langIndicator.style.opacity = '0';
+            
+            setTimeout(() => {
+                currentLang = currentLang === 'en' ? 'am' : 'en';
+                document.documentElement.lang = currentLang;
+                langIndicator.textContent = currentLang.toUpperCase();
+                
+                translatableElements.forEach(el => {
+                    const newText = el.getAttribute(`data-${currentLang}`);
+                    if (newText) el.textContent = newText;
+                    el.style.transition = 'opacity 0.4s ease';
+                    el.style.opacity = '1';
+                });
+                langIndicator.style.transition = 'opacity 0.4s ease';
+                langIndicator.style.opacity = '1';
+            }, 300); // Wait for fade out to complete
+        });
+
     </script>
 </body>
 </html>
