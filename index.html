@@ -1,1 +1,390 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sintayew (Aksel) | Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Space+Grotesk:wght@300;500;700&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Space Grotesk', 'sans-serif'],
+                    },
+                    colors: {
+                        black: '#050505',
+                        white: '#f5f5f5',
+                        accent: '#e0e0e0',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #050505;
+            color: #f5f5f5;
+            overflow-x: hidden;
+        }
 
+        ::selection {
+            background-color: #f5f5f5;
+            color: #050505;
+        }
+
+        .line-art {
+            stroke-dasharray: 1000;
+            stroke-dashoffset: 1000;
+            animation: draw 3s ease-out forwards;
+        }
+
+        @keyframes draw {
+            to { stroke-dashoffset: 0; }
+        }
+
+        .spin-slow {
+            animation: spin 20s linear infinite;
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* High contrast borders */
+        .hc-border {
+            border: 1px solid rgba(245, 245, 245, 0.15);
+        }
+        
+        .hc-border:hover {
+            border-color: rgba(245, 245, 245, 0.8);
+            box-shadow: 0 0 15px rgba(245, 245, 245, 0.1);
+        }
+
+        .nav-link {
+            position: relative;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 1px;
+            bottom: -2px;
+            left: 0;
+            background-color: #f5f5f5;
+            transition: width 0.3s ease;
+        }
+        .nav-link:hover::after {
+            width: 100%;
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-white selection:text-black">
+
+    <nav class="fixed w-full top-0 z-50 mix-blend-difference backdrop-blur-sm bg-black/30 border-b border-white/10">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#" class="text-xl font-display font-bold uppercase tracking-widest">Aksel.</a>
+            
+            <!-- Desktop Nav -->
+            <div class="hidden md:flex space-x-8 text-sm uppercase tracking-wider font-light">
+                <a href="#about" class="nav-link">About</a>
+                <a href="#mobile" class="nav-link">Mobile Dev</a>
+                <a href="#creative" class="nav-link">Design & Video</a>
+                <a href="#contact" class="nav-link">Contact</a>
+            </div>
+
+            <!-- Mobile Menu Button -->
+            <button id="mobile-menu-btn" class="md:hidden flex flex-col space-y-1.5 focus:outline-none z-50">
+                <span class="w-6 h-px bg-white block transition-all duration-300 origin-center"></span>
+                <span class="w-6 h-px bg-white block transition-all duration-300"></span>
+                <span class="w-6 h-px bg-white block transition-all duration-300 origin-center"></span>
+            </button>
+        </div>
+        
+        <!-- Mobile Nav Overlay -->
+        <div id="mobile-nav" class="fixed inset-0 bg-black flex flex-col items-center justify-center opacity-0 pointer-events-none transition-opacity duration-300 z-40">
+            <div class="flex flex-col space-y-8 text-2xl uppercase tracking-widest font-display text-center">
+                <a href="#about" class="mobile-link hover:text-gray-400 transition-colors">About</a>
+                <a href="#mobile" class="mobile-link hover:text-gray-400 transition-colors">Mobile Dev</a>
+                <a href="#creative" class="mobile-link hover:text-gray-400 transition-colors">Design & Video</a>
+                <a href="#contact" class="mobile-link hover:text-gray-400 transition-colors">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <header class="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
+        <!-- Abstract Line Art Background -->
+        <div class="absolute inset-0 flex items-center justify-center opacity-20 pointer-events-none">
+            <svg class="spin-slow w-[800px] h-[800px]" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="50" cy="50" r="40" stroke="white" stroke-width="0.2" class="line-art" />
+                <circle cx="50" cy="50" r="30" stroke="white" stroke-width="0.2" class="line-art" style="animation-delay: 0.5s"/>
+                <ellipse cx="50" cy="50" rx="40" ry="10" stroke="white" stroke-width="0.2" transform="rotate(45 50 50)" class="line-art" style="animation-delay: 1s"/>
+                <ellipse cx="50" cy="50" rx="40" ry="10" stroke="white" stroke-width="0.2" transform="rotate(135 50 50)" class="line-art" style="animation-delay: 1.5s"/>
+            </svg>
+        </div>
+
+        <div class="max-w-7xl mx-auto px-6 w-full relative z-10 flex flex-col items-center text-center">
+            <p class="text-xs md:text-sm uppercase tracking-[0.3em] text-gray-400 mb-6 reveal">Medical Student & Creator</p>
+            <h1 class="text-6xl md:text-8xl lg:text-[10rem] font-display font-bold leading-none tracking-tighter mb-6 reveal" style="transition-delay: 0.2s;">
+                SINTAYEW
+            </h1>
+            <h2 class="text-3xl md:text-5xl font-display font-light text-gray-400 mb-10 reveal" style="transition-delay: 0.3s;">
+                (Aksel)
+            </h2>
+            <div class="flex space-x-4 reveal" style="transition-delay: 0.4s;">
+                <a href="#about" class="px-8 py-3 border border-white hover:bg-white hover:text-black transition-all duration-300 text-sm uppercase tracking-widest font-semibold">
+                    Explore Work
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <section id="about" class="py-32 relative">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                <div class="reveal">
+                    <h2 class="text-4xl md:text-5xl font-display font-bold mb-8 relative inline-block">
+                        DUALITY
+                        <div class="absolute -bottom-2 left-0 w-full h-px bg-white"></div>
+                    </h2>
+                    <p class="text-xl md:text-2xl font-light leading-relaxed mb-6 text-gray-300">
+                        I bridge the gap between clinical precision and creative expression.
+                    </p>
+                    <p class="text-base text-gray-400 leading-relaxed mb-8">
+                        As a Medical Student, I understand systems, logic, and the human condition. As a Digital Creator, I channel that understanding into impactful mobile applications, striking minimalist designs, and engaging video narratives. It's not about choosing one path; it's about synthesizing them.
+                    </p>
+                    <div class="flex flex-wrap gap-3">
+                        <span class="px-4 py-1 text-xs border border-white/30 rounded-full">Medicine</span>
+                        <span class="px-4 py-1 text-xs border border-white/30 rounded-full">Development</span>
+                        <span class="px-4 py-1 text-xs border border-white/30 rounded-full">Design</span>
+                    </div>
+                </div>
+                
+                <!-- Minimalist Line Art: Brain & Heart Concept -->
+                <div class="flex justify-center reveal">
+                    <svg width="300" height="300" viewBox="0 0 100 100" fill="none" stroke="white" stroke-width="1" class="w-full max-w-sm">
+                        <!-- Left Hemisphere (Logic/Code) -->
+                        <path d="M50 10 C 30 10, 10 30, 10 50 C 10 70, 30 90, 50 90" stroke-dasharray="2 2" />
+                        <path d="M30 30 L 70 70 M 70 30 L 30 70" stroke-width="0.5" opacity="0.5"/>
+                        <rect x="20" y="40" width="20" height="20" stroke-width="0.5"/>
+                        <!-- Right Hemisphere (Organic/Creative) -->
+                        <path d="M50 10 C 70 10, 90 30, 90 50 C 90 70, 70 90, 50 90" />
+                        <circle cx="70" cy="50" r="10" stroke-width="0.5" />
+                        <!-- Central connector -->
+                        <line x1="50" y1="10" x2="50" y2="90" stroke-width="2" />
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="mobile" class="py-32 bg-[#0a0a0a] border-y border-white/10 relative">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="mb-16 reveal">
+                <span class="text-xs uppercase tracking-[0.2em] text-gray-500 block mb-2">01 / Engineering</span>
+                <h2 class="text-5xl md:text-6xl font-display font-bold">Mobile Dev.</h2>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- React Native Card -->
+                <div class="hc-border p-8 reveal transition-all duration-300 group bg-black/50">
+                    <div class="w-12 h-12 mb-8 flex items-center justify-center border border-white/20 rounded-full group-hover:bg-white group-hover:text-black transition-colors">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"></path></svg>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4 font-display">React Native</h3>
+                    <p class="text-sm text-gray-400 leading-relaxed mb-6">
+                        Building fluid, cross-platform mobile experiences. Focusing on clean UI/UX and performant state management to deliver production-ready apps.
+                    </p>
+                    <div class="w-full h-px bg-white/10 group-hover:bg-white/50 transition-colors"></div>
+                </div>
+
+                <!-- Expo Card -->
+                <div class="hc-border p-8 reveal transition-all duration-300 group bg-black/50" style="transition-delay: 0.1s;">
+                    <div class="w-12 h-12 mb-8 flex items-center justify-center border border-white/20 rounded-full group-hover:bg-white group-hover:text-black transition-colors text-xl font-bold font-display">
+                        E
+                    </div>
+                    <h3 class="text-xl font-bold mb-4 font-display">Expo framework</h3>
+                    <p class="text-sm text-gray-400 leading-relaxed mb-6">
+                        Accelerating development cycles with Expo. Leveraging its robust ecosystem for rapid prototyping, OTA updates, and seamless native module integration.
+                    </p>
+                    <div class="w-full h-px bg-white/10 group-hover:bg-white/50 transition-colors"></div>
+                </div>
+
+                <!-- Python Card -->
+                <div class="hc-border p-8 reveal transition-all duration-300 group bg-black/50" style="transition-delay: 0.2s;">
+                    <div class="w-12 h-12 mb-8 flex items-center justify-center border border-white/20 rounded-full group-hover:bg-white group-hover:text-black transition-colors">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4 font-display">Python Backends</h3>
+                    <p class="text-sm text-gray-400 leading-relaxed mb-6">
+                        Developing scalable backend architectures and APIs. Handling data processing, automation scripts, and server-side logic to power mobile frontends.
+                    </p>
+                    <div class="w-full h-px bg-white/10 group-hover:bg-white/50 transition-colors"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="creative" class="py-32 relative">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="mb-16 reveal text-right">
+                <span class="text-xs uppercase tracking-[0.2em] text-gray-500 block mb-2">02 / Creative</span>
+                <h2 class="text-5xl md:text-6xl font-display font-bold">Design & Media.</h2>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+                <!-- Graphics -->
+                <div class="reveal">
+                    <div class="aspect-video bg-[#0a0a0a] hc-border flex items-center justify-center mb-6 overflow-hidden relative group">
+                        <!-- Abstract minimal graphic -->
+                        <svg width="100%" height="100%" viewBox="0 0 200 100" class="absolute inset-0">
+                            <rect x="20" y="20" width="60" height="60" fill="none" stroke="#333" stroke-width="1" class="group-hover:stroke-white transition-colors duration-500"/>
+                            <circle cx="130" cy="50" r="30" fill="none" stroke="#333" stroke-width="1" class="group-hover:stroke-white transition-colors duration-500 delay-100"/>
+                            <line x1="0" y1="50" x2="200" y2="50" stroke="#222" stroke-width="0.5" />
+                        </svg>
+                        <h3 class="z-10 text-2xl font-display font-bold tracking-widest mix-blend-difference text-white">MINIMALIST GRAPHICS</h3>
+                    </div>
+                    <p class="text-gray-400 text-sm leading-relaxed">
+                        Clean, high-contrast visual design. Distilling complex ideas into striking, minimalist typography and geometry that demands attention without clutter.
+                    </p>
+                </div>
+
+                <!-- Video Editing -->
+                <div class="reveal" style="transition-delay: 0.1s;">
+                    <div class="aspect-video bg-[#0a0a0a] hc-border flex items-center justify-center mb-6 overflow-hidden relative group">
+                        <svg width="100%" height="100%" viewBox="0 0 200 100" class="absolute inset-0">
+                            <path d="M40 20 L40 80 L90 50 Z" fill="none" stroke="#333" stroke-width="1" class="group-hover:stroke-white transition-colors duration-500"/>
+                            <rect x="110" y="30" width="50" height="40" fill="none" stroke="#333" stroke-width="1" class="group-hover:stroke-white transition-colors duration-500 delay-100"/>
+                        </svg>
+                        <div class="z-10 flex flex-col items-center">
+                            <h3 class="text-2xl font-display font-bold tracking-widest mix-blend-difference text-white mb-2">VIDEO & PODCAST</h3>
+                            <div class="flex gap-3 text-xs tracking-widest text-gray-500">
+                                <span>TIKTOK</span> • <span>YOUTUBE</span>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-gray-400 text-sm leading-relaxed">
+                        Precision editing for the modern attention span. Crafting high-retention short-form content (TikTok/Reels), engaging YouTube videos, and pristine audio for Podcasts.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="py-32 bg-[#0a0a0a] border-t border-white/10 relative overflow-hidden">
+        <!-- Background Grid Line Art -->
+        <div class="absolute inset-0 pointer-events-none opacity-[0.03]">
+            <svg width="100%" height="100%">
+                <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+                    <path d="M 40 0 L 0 0 0 40" fill="none" stroke="white" stroke-width="1"/>
+                </pattern>
+                <rect width="100%" height="100%" fill="url(#grid)" />
+            </svg>
+        </div>
+
+        <div class="max-w-7xl mx-auto px-6 text-center reveal relative z-10">
+            <h2 class="text-4xl md:text-7xl font-display font-bold mb-8">Let's Create.</h2>
+            <p class="text-gray-400 max-w-2xl mx-auto mb-12">
+                Whether you need a robust mobile application, a compelling visual identity, or high-quality video editing, let's build something exceptional together.
+            </p>
+            
+            <a href="mailto:hello@example.com" class="inline-block border border-white px-12 py-5 text-lg font-display uppercase tracking-widest hover:bg-white hover:text-black transition-all duration-300">
+                Initiate Contact
+            </a>
+
+            <div class="mt-24 flex justify-center space-x-8">
+                <!-- Minimal Social Icons -->
+                <a href="#" class="text-gray-500 hover:text-white transition-colors">
+                    <span class="sr-only">GitHub</span>
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clip-rule="evenodd" /></svg>
+                </a>
+                <a href="#" class="text-gray-500 hover:text-white transition-colors">
+                    <span class="sr-only">LinkedIn</span>
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" clip-rule="evenodd" /></svg>
+                </a>
+                <a href="#" class="text-gray-500 hover:text-white transition-colors">
+                    <span class="sr-only">Twitter</span>
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84" /></svg>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <footer class="py-8 border-t border-white/10 text-center text-xs text-gray-600 tracking-widest uppercase">
+        <p>&copy; <span id="year"></span> Sintayew (Aksel). All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Set current year
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        // Mobile Menu Toggle
+        const btn = document.getElementById('mobile-menu-btn');
+        const nav = document.getElementById('mobile-nav');
+        const spans = btn.querySelectorAll('span');
+        const mobileLinks = document.querySelectorAll('.mobile-link');
+        let isOpen = false;
+
+        function toggleMenu() {
+            isOpen = !isOpen;
+            if (isOpen) {
+                nav.classList.remove('opacity-0', 'pointer-events-none');
+                nav.classList.add('opacity-100', 'pointer-events-auto');
+                
+                spans[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
+                spans[1].style.opacity = '0';
+                spans[2].style.transform = 'rotate(-45deg) translate(5px, -5px)';
+                document.body.style.overflow = 'hidden'; // Prevent scrolling
+            } else {
+                nav.classList.remove('opacity-100', 'pointer-events-auto');
+                nav.classList.add('opacity-0', 'pointer-events-none');
+                
+                spans[0].style.transform = 'none';
+                spans[1].style.opacity = '1';
+                spans[2].style.transform = 'none';
+                document.body.style.overflow = ''; // Restore scrolling
+            }
+        }
+
+        btn.addEventListener('click', toggleMenu);
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                if(isOpen) toggleMenu();
+            });
+        });
+
+        // Scroll Reveal Animation via Intersection Observer
+        const revealElements = document.querySelectorAll('.reveal');
+
+        const revealOptions = {
+            threshold: 0.15,
+            rootMargin: "0px 0px -50px 0px"
+        };
+
+        const revealObserver = new IntersectionObserver(function(entries, observer) {
+            entries.forEach(entry => {
+                if (!entry.isIntersecting) return;
+                entry.target.classList.add('active');
+                observer.unobserve(entry.target);
+            });
+        }, revealOptions);
+
+        revealElements.forEach(el => revealObserver.observe(el));
+    </script>
+</body>
+</html>
