@@ -3,11 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ALAS | Bespoke Tailoring & Digital Creation by Bekalu</title>
+    <title>ALAS | Tailor & Content Creator</title>
+    
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Syne:wght@400;600;700;800&family=Playfair+Display:ital@0;1&display=swap" rel="stylesheet">
     
     <script>
         tailwind.config = {
@@ -15,13 +16,16 @@
                 extend: {
                     fontFamily: {
                         sans: ['Inter', 'sans-serif'],
+                        display: ['Syne', 'sans-serif'],
                         serif: ['Playfair Display', 'serif'],
                     },
                     colors: {
-                        ivory: '#FDFBF7',
-                        charcoal: '#222222',
-                        taupe: '#8B7E74',
-                        taupelight: '#D0C9C0',
+                        black: '#050505',
+                        white: '#FAFAFA',
+                        gray: '#888888',
+                    },
+                    transitionTimingFunction: {
+                        'sharp': 'cubic-bezier(0.8, 0, 0.2, 1)',
                     }
                 }
             }
@@ -30,402 +34,380 @@
 
     <style>
         body {
-            background-color: #FDFBF7;
-            color: #222222;
+            background-color: #FAFAFA;
+            color: #050505;
             overflow-x: hidden;
         }
 
         ::selection {
-            background-color: #8B7E74;
-            color: #FDFBF7;
+            background-color: #050505;
+            color: #FAFAFA;
         }
 
-        /* Brand Logo Styling */
-        .brand-logo {
-            max-height: 70px;
-            width: auto;
-            object-fit: contain;
-            transition: transform 0.3s ease;
-        }
-        
-        .brand-logo:hover {
-            transform: scale(1.02);
-        }
+        /* Sharp Lines */
+        .line-x { border-bottom: 1px solid #050505; }
+        .line-y { border-right: 1px solid #050505; }
+        .line-x-white { border-bottom: 1px solid #FAFAFA; }
 
-        /* Scroll Reveal Animation */
+        /* Reveal Animations */
         .reveal {
             opacity: 0;
-            transform: translateY(40px);
-            transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
+            transform: translateY(30px) scale(0.98);
+            transition: opacity 0.8s cubic-bezier(0.8, 0, 0.2, 1), 
+                        transform 0.8s cubic-bezier(0.8, 0, 0.2, 1);
         }
 
         .reveal.active {
             opacity: 1;
-            transform: translateY(0);
+            transform: translateY(0) scale(1);
         }
 
-        /* Image hover zoom effect */
-        .img-wrap {
+        /* Sharp Image Hover */
+        .img-container {
             overflow: hidden;
+            position: relative;
         }
         
-        .img-wrap img {
-            transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        .img-container img {
+            transition: transform 0.6s cubic-bezier(0.8, 0, 0.2, 1), filter 0.6s ease;
+            filter: grayscale(100%);
         }
         
-        .img-wrap:hover img {
-            transform: scale(1.05);
+        .img-container:hover img {
+            transform: scale(1.03);
+            filter: grayscale(0%);
         }
 
-        /* Fine editorial lines */
-        .hairline-top { border-top: 1px solid rgba(34, 34, 34, 0.15); }
-        .hairline-bottom { border-bottom: 1px solid rgba(34, 34, 34, 0.15); }
-
-        /* Custom underline for links */
-        .nav-link {
+        /* Custom underline for navigation */
+        .link-hover {
             position: relative;
             text-decoration: none;
+            overflow: hidden;
+            display: inline-block;
         }
-        .nav-link::after {
+        
+        .link-hover::after {
             content: '';
             position: absolute;
-            width: 0;
-            height: 1px;
-            bottom: -2px;
+            bottom: 0;
             left: 0;
-            background-color: #222222;
-            transition: width 0.4s ease;
-        }
-        .nav-link:hover::after {
             width: 100%;
+            height: 1px;
+            background-color: currentColor;
+            transform: translateX(-101%);
+            transition: transform 0.4s cubic-bezier(0.8, 0, 0.2, 1);
+        }
+        
+        .link-hover:hover::after {
+            transform: translateX(0);
+        }
+
+        /* Logo Sizing */
+        .nav-logo {
+            height: 48px; /* Adjustable base size */
+            width: auto;
+            object-fit: contain;
         }
     </style>
 </head>
 <body class="antialiased font-sans">
 
-    <nav class="fixed w-full top-0 z-50 bg-ivory/90 backdrop-blur-md hairline-bottom transition-all duration-300" id="navbar">
-        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+    <nav class="fixed w-full top-0 z-50 bg-white/90 backdrop-blur-md line-x transition-transform duration-500" id="navbar">
+        <div class="max-w-[90rem] mx-auto px-6 py-4 flex justify-between items-center">
             
-            <!-- Brand Logo Space -->
-            <a href="#" class="flex items-center">
-                <img src="assets/logo.jpg" alt="ALAS Logo" class="brand-logo rounded-md shadow-sm">
+            <a href="#" class="flex items-center z-50">
+                <img src="assets/logo.jpg" alt="ALAS Logo" class="nav-logo">
             </a>
             
-            <!-- Desktop Nav -->
-            <div class="hidden md:flex space-x-10 text-xs uppercase tracking-[0.15em] text-charcoal/80 font-medium">
-                <a href="#about" class="nav-link hover:text-charcoal transition-colors">About</a>
-                <a href="#portfolio" class="nav-link hover:text-charcoal transition-colors">Bespoke</a>
-                <a href="#content" class="nav-link hover:text-charcoal transition-colors">Content</a>
-                <a href="#contact" class="nav-link hover:text-charcoal transition-colors">Contact</a>
+            <div class="hidden md:flex items-center space-x-12 text-sm uppercase tracking-[0.1em] font-medium">
+                <a href="#bespoke" class="link-hover">Bespoke Tailoring</a>
+                <a href="#content" class="link-hover">Content Creation</a>
+                <a href="#portfolio" class="link-hover">Portfolio</a>
+                <a href="#contact" class="px-6 py-2 bg-black text-white hover:bg-white hover:text-black border border-black transition-colors duration-300 sharp">Contact</a>
             </div>
 
-            <!-- Mobile Menu Button -->
-            <button id="mobile-menu-btn" class="md:hidden flex flex-col space-y-1.5 focus:outline-none z-50">
-                <span class="w-7 h-[1px] bg-charcoal block transition-all duration-300 origin-center"></span>
-                <span class="w-7 h-[1px] bg-charcoal block transition-all duration-300"></span>
-                <span class="w-7 h-[1px] bg-charcoal block transition-all duration-300 origin-center"></span>
+            <!-- Mobile Toggle -->
+            <button id="mobile-btn" class="md:hidden flex flex-col justify-center items-center w-8 h-8 z-50 focus:outline-none group">
+                <span class="w-full h-[1.5px] bg-black mb-1.5 transition-transform duration-300 origin-right group-hover:w-3/4"></span>
+                <span class="w-full h-[1.5px] bg-black transition-transform duration-300 origin-right"></span>
             </button>
         </div>
-        
-        <!-- Mobile Nav Overlay -->
-        <div id="mobile-nav" class="fixed inset-0 bg-ivory flex flex-col items-center justify-center opacity-0 pointer-events-none transition-opacity duration-500 z-40">
-            <div class="flex flex-col space-y-8 text-2xl uppercase tracking-[0.2em] font-serif text-center">
-                <a href="#about" class="mobile-link hover:text-taupe transition-colors">About</a>
-                <a href="#portfolio" class="mobile-link hover:text-taupe transition-colors">Bespoke</a>
-                <a href="#content" class="mobile-link hover:text-taupe transition-colors">Content</a>
-                <a href="#contact" class="mobile-link hover:text-taupe transition-colors">Contact</a>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="fixed inset-0 bg-black text-white flex flex-col justify-center px-8 opacity-0 pointer-events-none transition-opacity duration-500 z-40">
+            <div class="flex flex-col space-y-8 text-4xl font-display uppercase tracking-widest">
+                <a href="#bespoke" class="mobile-link hover:text-gray transition-colors">Bespoke</a>
+                <a href="#content" class="mobile-link hover:text-gray transition-colors">Content</a>
+                <a href="#portfolio" class="mobile-link hover:text-gray transition-colors">Gallery</a>
+                <a href="#contact" class="mobile-link hover:text-gray transition-colors">Contact</a>
             </div>
         </div>
     </nav>
 
-    <header class="relative min-h-screen flex items-center pt-24 pb-12">
-        <div class="max-w-7xl mx-auto px-6 w-full grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <div class="order-2 lg:order-1 reveal z-10">
-                <p class="text-xs uppercase tracking-[0.3em] text-taupe mb-6 font-medium">Bekalu • Fashion Tailor & Creator</p>
-                <h1 class="text-6xl md:text-8xl lg:text-9xl font-serif leading-none mb-8 text-charcoal">
+    <header class="min-h-screen pt-24 flex flex-col">
+        <div class="flex-1 grid grid-cols-1 lg:grid-cols-12 max-w-[90rem] mx-auto w-full px-6">
+            
+            <div class="lg:col-span-7 flex flex-col justify-center py-12 lg:pr-12 relative z-10 reveal">
+                <p class="text-xs uppercase tracking-[0.3em] text-gray mb-8 font-medium">Bekalu / Tailor & Creator</p>
+                <h1 class="text-7xl md:text-[8rem] lg:text-[10rem] font-display font-bold leading-[0.85] tracking-tighter mb-8 uppercase">
                     ALAS.
                 </h1>
-                <p class="text-lg md:text-xl font-light text-charcoal/80 leading-relaxed mb-10 max-w-md">
-                    Where the precision of bespoke tailoring meets modern digital storytelling. Redefining elegance for the contemporary gentleman.
+                <p class="text-xl md:text-2xl font-serif italic text-black/80 max-w-lg mb-12">
+                    Defining modern elegance through meticulous craftsmanship and striking visual narratives.
                 </p>
-                <a href="#portfolio" class="inline-block border border-charcoal text-charcoal px-10 py-4 text-xs uppercase tracking-widest hover:bg-charcoal hover:text-ivory transition-all duration-500">
-                    View Collections
-                </a>
+                <div class="flex gap-6 items-center">
+                    <a href="#portfolio" class="text-sm font-medium uppercase tracking-[0.1em] link-hover">View Portfolio</a>
+                    <span class="w-12 h-[1px] bg-black"></span>
+                </div>
             </div>
-            
-            <div class="order-1 lg:order-2 reveal relative" style="transition-delay: 0.2s;">
-                <!-- Decorative elegant frame -->
-                <div class="absolute -inset-4 border border-taupelight/50 hidden md:block"></div>
-                <div class="img-wrap h-[60vh] lg:h-[80vh] w-full bg-taupelight">
-                    <img src="https://images.unsplash.com/photo-1593032465175-481ac7f401a0?auto=format&fit=crop&w=1600&q=80" alt="Elegant Bespoke Suit" class="w-full h-full object-cover" />
+
+            <div class="lg:col-span-5 relative h-[60vh] lg:h-auto pb-12 lg:pb-0 reveal" style="transition-delay: 0.2s;">
+                <div class="absolute inset-0 lg:inset-y-12 lg:-right-6 img-container bg-gray">
+                    <img src="https://images.unsplash.com/photo-1593032465175-481ac7f401a0?auto=format&fit=crop&w=1600&q=80" alt="Editorial Suit" class="w-full h-full object-cover object-top" />
                 </div>
             </div>
         </div>
+        <div class="w-full line-x"></div>
     </header>
 
-    <section id="about" class="py-32 bg-white hairline-top hairline-bottom">
-        <div class="max-w-7xl mx-auto px-6">
-            <div class="grid grid-cols-1 md:grid-cols-12 gap-12 items-center">
-                <div class="md:col-span-5 img-wrap reveal">
-                    <img src="https://images.unsplash.com/photo-1556905055-8f358a7a47b2?auto=format&fit=crop&w=800&q=80" alt="Tailoring Details" class="w-full h-[500px] object-cover grayscale-[20%]" />
-                </div>
+    <section id="bespoke" class="py-32 relative">
+        <div class="max-w-[90rem] mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-16 lg:gap-32 items-center">
                 
-                <div class="md:col-span-7 md:pl-12 reveal" style="transition-delay: 0.2s;">
-                    <h2 class="text-3xl md:text-5xl font-serif mb-8 text-charcoal">
-                        The Art of <br><span class="italic text-taupe">Bespoke & Storytelling</span>
+                <div class="img-container h-[70vh] reveal">
+                    <img src="https://images.unsplash.com/photo-1556905055-8f358a7a47b2?auto=format&fit=crop&w=1200&q=80" alt="Tailoring Process" class="w-full h-full object-cover" />
+                </div>
+
+                <div class="reveal" style="transition-delay: 0.1s;">
+                    <div class="flex items-center gap-4 mb-8">
+                        <span class="text-xs uppercase tracking-[0.2em] font-bold">01</span>
+                        <div class="flex-1 h-[1px] bg-black"></div>
+                    </div>
+                    <h2 class="text-5xl md:text-7xl font-display font-bold uppercase tracking-tighter mb-8">
+                        Bespoke <br>Tailoring
                     </h2>
-                    <div class="space-y-6 text-charcoal/70 font-light leading-relaxed">
+                    <div class="space-y-6 text-black/80 font-serif text-lg leading-relaxed">
                         <p>
-                            I am Bekalu, the hands and vision behind the ALAS brand. My journey began with a profound respect for the heritage of tailoring—the meticulous measurement, the drape of fine wool, the perfect silhouette.
+                            Every garment crafted under the ALAS label begins with a conversation and precise measurements. It is an intimate process where traditional sartorial techniques meet contemporary silhouettes.
                         </p>
                         <p>
-                            But clothing does not exist in a vacuum. It is meant to be seen, experienced, and shared. As a content creator, I bridge the gap between traditional craftsmanship and modern media, documenting the process, styling the final pieces, and curating a lifestyle that speaks to the modern sartorialist.
-                        </p>
-                        <p class="font-medium text-charcoal">
-                            ALAS is not just a label; it is a narrative woven into every garment.
+                            From selecting premium wools and imported linens to the final hand-stitched lapel, I ensure that your clothing is not merely worn, but experienced—a perfect architectural extension of the individual.
                         </p>
                     </div>
+                    <a href="#contact" class="inline-block mt-12 px-8 py-4 bg-black text-white text-xs uppercase tracking-[0.15em] font-medium hover:bg-white hover:text-black border border-black transition-all duration-300">
+                        Book a Fitting
+                    </a>
                 </div>
+
             </div>
         </div>
     </section>
 
-    <section id="portfolio" class="py-32 bg-ivory">
-        <div class="max-w-7xl mx-auto px-6">
+    <section id="content" class="py-32 bg-black text-white relative">
+        <div class="max-w-[90rem] mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-16 lg:gap-32 items-center">
+                
+                <div class="order-2 md:order-1 reveal" style="transition-delay: 0.1s;">
+                    <div class="flex items-center gap-4 mb-8">
+                        <span class="text-xs uppercase tracking-[0.2em] font-bold">02</span>
+                        <div class="flex-1 h-[1px] bg-white"></div>
+                    </div>
+                    <h2 class="text-5xl md:text-7xl font-display font-bold uppercase tracking-tighter mb-8">
+                        Content <br>Creation
+                    </h2>
+                    <div class="space-y-6 text-white/80 font-serif text-lg leading-relaxed">
+                        <p>
+                            In the modern era, fashion exists in motion. Beyond creating the garment, I conceptualize and direct the digital narrative that surrounds it.
+                        </p>
+                        <p>
+                            Through high-end videography, editorial styling, and engaging social media curation, ALAS documents the lifestyle of the contemporary gentleman. We don't just make clothes; we build the world they inhabit.
+                        </p>
+                    </div>
+                    <a href="#contact" class="inline-block mt-12 px-8 py-4 bg-white text-black text-xs uppercase tracking-[0.15em] font-medium hover:bg-black hover:text-white border border-white transition-all duration-300">
+                        Discuss Collaboration
+                    </a>
+                </div>
+
+                <div class="order-1 md:order-2 img-container h-[70vh] reveal">
+                    <img src="https://images.unsplash.com/photo-1617137968427-85924c800a22?auto=format&fit=crop&w=1200&q=80" alt="Content Creation" class="w-full h-full object-cover" />
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section id="portfolio" class="py-32">
+        <div class="max-w-[90rem] mx-auto px-6">
             <div class="flex flex-col md:flex-row md:items-end justify-between mb-16 reveal">
                 <div>
-                    <span class="text-xs uppercase tracking-[0.2em] text-taupe block mb-3">01 / The Craft</span>
-                    <h2 class="text-4xl md:text-6xl font-serif">Tailoring Portfolio</h2>
-                </div>
-                <a href="#contact" class="hidden md:inline-block text-xs uppercase tracking-widest nav-link mt-6 md:mt-0 pb-1 text-charcoal font-medium">Book a Fitting</a>
-            </div>
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
-                <!-- Project 1 -->
-                <div class="reveal group cursor-pointer">
-                    <div class="img-wrap mb-6 h-[600px]">
-                        <img src="https://images.unsplash.com/photo-1594938298596-70f594f61362?auto=format&fit=crop&w=800&q=80" alt="Classic Tuxedo" class="w-full h-full object-cover object-top" />
-                    </div>
-                    <h3 class="text-xl font-serif mb-2">The Midnight Tuxedo</h3>
-                    <p class="text-sm text-taupe font-light tracking-wide">Bespoke Eveningwear</p>
-                </div>
-
-                <!-- Project 2 (Offset) -->
-                <div class="reveal group cursor-pointer md:mt-24">
-                    <div class="img-wrap mb-6 h-[600px]">
-                        <img src="https://images.unsplash.com/photo-1617137968427-85924c800a22?auto=format&fit=crop&w=800&q=80" alt="Wool Overcoat" class="w-full h-full object-cover object-center" />
-                    </div>
-                    <h3 class="text-xl font-serif mb-2">Autumn Overcoat</h3>
-                    <p class="text-sm text-taupe font-light tracking-wide">Heavyweight Camel Wool</p>
-                </div>
-
-                <!-- Project 3 -->
-                <div class="reveal group cursor-pointer">
-                    <div class="img-wrap mb-6 h-[600px]">
-                        <img src="https://images.unsplash.com/photo-1592878904946-b3cd8ae243d0?auto=format&fit=crop&w=800&q=80" alt="Summer Linen" class="w-full h-full object-cover object-top" />
-                    </div>
-                    <h3 class="text-xl font-serif mb-2">The Riviera Suit</h3>
-                    <p class="text-sm text-taupe font-light tracking-wide">Breathable Italian Linen</p>
-                </div>
-
-                <!-- Project 4 (Offset) -->
-                <div class="reveal group cursor-pointer md:mt-24">
-                    <div class="img-wrap mb-6 h-[600px]">
-                        <img src="https://images.unsplash.com/photo-1598808503746-f34c53b9323e?auto=format&fit=crop&w=800&q=80" alt="Details" class="w-full h-full object-cover object-center" />
-                    </div>
-                    <h3 class="text-xl font-serif mb-2">Sartorial Details</h3>
-                    <p class="text-sm text-taupe font-light tracking-wide">Hand-stitched Lapels & Cuffs</p>
+                    <span class="text-xs uppercase tracking-[0.2em] font-bold block mb-4">03 // The Archive</span>
+                    <h2 class="text-6xl md:text-8xl font-display font-bold uppercase tracking-tighter">Gallery</h2>
                 </div>
             </div>
-            
-            <div class="mt-12 text-center md:hidden reveal">
-                 <a href="#contact" class="inline-block border border-charcoal text-charcoal px-8 py-3 text-xs uppercase tracking-widest">Book a Fitting</a>
+
+            <!-- Masonry-style Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-6 lg:gap-10">
+                
+                <!-- Item 1 (Large) -->
+                <div class="md:col-span-8 h-[60vh] md:h-[80vh] img-container group reveal">
+                    <img src="https://images.unsplash.com/photo-1594938298596-70f594f61362?auto=format&fit=crop&w=1600&q=80" alt="Tuxedo" class="w-full h-full object-cover" />
+                    <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center">
+                        <span class="text-white font-display text-2xl uppercase tracking-widest">Midnight Tuxedo</span>
+                    </div>
+                </div>
+
+                <!-- Item 2 (Small Portrait) -->
+                <div class="md:col-span-4 h-[60vh] md:h-[80vh] img-container group reveal" style="transition-delay: 0.1s;">
+                    <img src="https://images.unsplash.com/photo-1592878904946-b3cd8ae243d0?auto=format&fit=crop&w=800&q=80" alt="Linen Suit" class="w-full h-full object-cover object-top" />
+                    <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center">
+                        <span class="text-white font-display text-xl uppercase tracking-widest">Summer Linen</span>
+                    </div>
+                </div>
+
+                <!-- Item 3 (Small Landscape) -->
+                <div class="md:col-span-5 h-[50vh] img-container group reveal">
+                    <img src="https://images.unsplash.com/photo-1598808503746-f34c53b9323e?auto=format&fit=crop&w=1000&q=80" alt="Details" class="w-full h-full object-cover" />
+                    <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center">
+                        <span class="text-white font-display text-xl uppercase tracking-widest">Sartorial Details</span>
+                    </div>
+                </div>
+
+                <!-- Item 4 (Medium) -->
+                <div class="md:col-span-7 h-[50vh] img-container group reveal" style="transition-delay: 0.1s;">
+                    <img src="https://images.unsplash.com/photo-1534030347209-467a5b0ad3e6?auto=format&fit=crop&w=1200&q=80" alt="Editorial Styling" class="w-full h-full object-cover" />
+                    <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center">
+                        <span class="text-white font-display text-2xl uppercase tracking-widest">Editorial Campaign</span>
+                    </div>
+                </div>
+
             </div>
         </div>
     </section>
 
-    <section id="content" class="py-32 bg-charcoal text-ivory relative overflow-hidden">
-        <!-- Subtle background pattern -->
-        <div class="absolute inset-0 opacity-5 pointer-events-none" style="background-image: radial-gradient(#FDFBF7 1px, transparent 1px); background-size: 30px 30px;"></div>
-
-        <div class="max-w-7xl mx-auto px-6 relative z-10">
-            <div class="text-center mb-20 reveal">
-                <span class="text-xs uppercase tracking-[0.2em] text-taupelight block mb-3">02 / The Narrative</span>
-                <h2 class="text-4xl md:text-6xl font-serif italic mb-6">Beyond the Seams</h2>
-                <p class="max-w-2xl mx-auto text-ivory/70 font-light">
-                    Follow the journey from fabric selection to final fit. Engaging fashion content, style guides, and behind-the-scenes tailoring aesthetics.
-                </p>
-            </div>
-
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                <!-- Video Mockup 1 -->
-                <div class="group relative aspect-[9/16] bg-black overflow-hidden reveal cursor-pointer">
-                    <img src="https://images.unsplash.com/photo-1534030347209-467a5b0ad3e6?auto=format&fit=crop&w=600&q=80" alt="Video Cover" class="w-full h-full object-cover opacity-70 group-hover:opacity-100 transition-opacity duration-500 group-hover:scale-105 transform" />
-                    <div class="absolute inset-0 flex items-center justify-center">
-                        <div class="w-16 h-16 rounded-full border border-ivory/50 flex items-center justify-center backdrop-blur-sm group-hover:bg-ivory group-hover:text-charcoal transition-all duration-300">
-                            <svg class="w-6 h-6 ml-1" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-                        </div>
-                    </div>
-                    <div class="absolute bottom-6 left-6 right-6">
-                        <p class="text-xs font-serif uppercase tracking-widest mb-1">Styling</p>
-                        <p class="text-sm font-light">How to style a double-breasted jacket.</p>
-                    </div>
+    <section id="contact" class="py-32 bg-black text-white line-x-white">
+        <div class="max-w-[90rem] mx-auto px-6">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16">
+                
+                <div class="reveal">
+                    <span class="text-xs uppercase tracking-[0.2em] font-bold text-gray block mb-4">04 // Connect</span>
+                    <h2 class="text-6xl md:text-8xl font-display font-bold uppercase tracking-tighter mb-8">Inquire</h2>
+                    <p class="text-white/70 font-serif text-xl max-w-md">
+                        Whether you seek a bespoke garment fitting or a creative partnership, reach out to start the dialogue.
+                    </p>
                 </div>
 
-                <!-- Video Mockup 2 -->
-                <div class="group relative aspect-[9/16] bg-black overflow-hidden reveal cursor-pointer" style="transition-delay: 0.1s;">
-                    <img src="https://images.unsplash.com/photo-1620803504383-e18e118ae2fc?auto=format&fit=crop&w=600&q=80" alt="Video Cover" class="w-full h-full object-cover opacity-70 group-hover:opacity-100 transition-opacity duration-500 group-hover:scale-105 transform" />
-                    <div class="absolute inset-0 flex items-center justify-center">
-                        <div class="w-16 h-16 rounded-full border border-ivory/50 flex items-center justify-center backdrop-blur-sm group-hover:bg-ivory group-hover:text-charcoal transition-all duration-300">
-                            <svg class="w-6 h-6 ml-1" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                <div class="reveal" style="transition-delay: 0.1s;">
+                    <form class="space-y-12" onsubmit="event.preventDefault();">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                            <div class="relative">
+                                <input type="text" id="name" class="w-full bg-transparent border-b border-white/30 py-4 text-lg focus:outline-none focus:border-white transition-colors peer placeholder-transparent" placeholder="Name" required>
+                                <label for="name" class="absolute left-0 -top-6 text-xs uppercase tracking-widest text-gray transition-all peer-placeholder-shown:text-base peer-placeholder-shown:top-4 peer-placeholder-shown:text-white/50 peer-focus:-top-6 peer-focus:text-xs peer-focus:text-white">Full Name</label>
+                            </div>
+                            <div class="relative">
+                                <input type="email" id="email" class="w-full bg-transparent border-b border-white/30 py-4 text-lg focus:outline-none focus:border-white transition-colors peer placeholder-transparent" placeholder="Email" required>
+                                <label for="email" class="absolute left-0 -top-6 text-xs uppercase tracking-widest text-gray transition-all peer-placeholder-shown:text-base peer-placeholder-shown:top-4 peer-placeholder-shown:text-white/50 peer-focus:-top-6 peer-focus:text-xs peer-focus:text-white">Email Address</label>
+                            </div>
                         </div>
-                    </div>
-                    <div class="absolute bottom-6 left-6 right-6">
-                        <p class="text-xs font-serif uppercase tracking-widest mb-1">Process</p>
-                        <p class="text-sm font-light">The art of taking precise measurements.</p>
-                    </div>
-                </div>
 
-                <!-- Video Mockup 3 -->
-                <div class="group relative aspect-[9/16] bg-black overflow-hidden reveal cursor-pointer hidden lg:block" style="transition-delay: 0.2s;">
-                    <img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=600&q=80" alt="Video Cover" class="w-full h-full object-cover opacity-70 group-hover:opacity-100 transition-opacity duration-500 group-hover:scale-105 transform" />
-                    <div class="absolute inset-0 flex items-center justify-center">
-                        <div class="w-16 h-16 rounded-full border border-ivory/50 flex items-center justify-center backdrop-blur-sm group-hover:bg-ivory group-hover:text-charcoal transition-all duration-300">
-                            <svg class="w-6 h-6 ml-1" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                        <div class="relative">
+                            <select id="inquiry-type" class="w-full bg-transparent border-b border-white/30 py-4 text-lg focus:outline-none focus:border-white transition-colors text-white appearance-none rounded-none cursor-pointer">
+                                <option value="" disabled selected class="text-black bg-white">Select Inquiry Type</option>
+                                <option value="bespoke" class="text-black bg-white">Bespoke Tailoring</option>
+                                <option value="content" class="text-black bg-white">Content Collaboration</option>
+                                <option value="press" class="text-black bg-white">Press & Media</option>
+                            </select>
+                            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-white">
+                                <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                            </div>
                         </div>
-                    </div>
-                    <div class="absolute bottom-6 left-6 right-6">
-                        <p class="text-xs font-serif uppercase tracking-widest mb-1">Lifestyle</p>
-                        <p class="text-sm font-light">A day in the life of ALAS.</p>
-                    </div>
+
+                        <div class="relative">
+                            <textarea id="message" rows="1" class="w-full bg-transparent border-b border-white/30 py-4 text-lg focus:outline-none focus:border-white transition-colors peer placeholder-transparent resize-none" placeholder="Message" required></textarea>
+                            <label for="message" class="absolute left-0 -top-6 text-xs uppercase tracking-widest text-gray transition-all peer-placeholder-shown:text-base peer-placeholder-shown:top-4 peer-placeholder-shown:text-white/50 peer-focus:-top-6 peer-focus:text-xs peer-focus:text-white">Message Details</label>
+                        </div>
+
+                        <button type="submit" class="w-full md:w-auto px-12 py-5 bg-white text-black font-display font-bold uppercase tracking-widest hover:bg-transparent hover:text-white border border-white transition-colors duration-300 sharp">
+                            Submit Request
+                        </button>
+                    </form>
                 </div>
             </div>
+        </div>
+    </section>
+
+    <footer class="bg-black text-white py-12">
+        <div class="max-w-[90rem] mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-6">
+            <h2 class="text-3xl font-display font-bold uppercase tracking-widest">ALAS.</h2>
             
-            <div class="mt-16 text-center reveal">
-                 <a href="#" class="inline-flex items-center space-x-3 text-sm uppercase tracking-widest hover:text-taupelight transition-colors">
-                     <span>Follow on Instagram</span>
-                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
-                 </a>
-            </div>
-        </div>
-    </section>
-
-    <section id="contact" class="py-32 bg-white hairline-bottom">
-        <div class="max-w-4xl mx-auto px-6">
-            <div class="text-center mb-16 reveal">
-                <h2 class="text-4xl md:text-5xl font-serif mb-4">Inquire & Connect</h2>
-                <p class="text-charcoal/70 font-light">Secure an appointment for a bespoke fitting or discuss a digital collaboration.</p>
+            <div class="flex gap-8 text-sm uppercase tracking-widest font-medium text-gray">
+                <a href="#" class="hover:text-white transition-colors">Instagram</a>
+                <a href="#" class="hover:text-white transition-colors">TikTok</a>
+                <a href="#" class="hover:text-white transition-colors">YouTube</a>
             </div>
 
-            <form class="space-y-10 reveal" onsubmit="event.preventDefault();">
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
-                    <div class="relative">
-                        <input type="text" id="name" class="block w-full border-0 border-b border-charcoal/20 bg-transparent py-3 focus:ring-0 focus:border-charcoal transition-colors peer placeholder-transparent" placeholder="Name" required>
-                        <label for="name" class="absolute left-0 -top-3.5 text-xs text-charcoal/50 uppercase tracking-widest transition-all peer-placeholder-shown:text-base peer-placeholder-shown:top-3 peer-placeholder-shown:normal-case peer-focus:-top-3.5 peer-focus:text-xs peer-focus:uppercase">Full Name</label>
-                    </div>
-                    <div class="relative">
-                        <input type="email" id="email" class="block w-full border-0 border-b border-charcoal/20 bg-transparent py-3 focus:ring-0 focus:border-charcoal transition-colors peer placeholder-transparent" placeholder="Email" required>
-                        <label for="email" class="absolute left-0 -top-3.5 text-xs text-charcoal/50 uppercase tracking-widest transition-all peer-placeholder-shown:text-base peer-placeholder-shown:top-3 peer-placeholder-shown:normal-case peer-focus:-top-3.5 peer-focus:text-xs peer-focus:uppercase">Email Address</label>
-                    </div>
-                </div>
-
-                <div class="relative">
-                    <select id="inquiry" class="block w-full border-0 border-b border-charcoal/20 bg-transparent py-3 focus:ring-0 focus:border-charcoal transition-colors text-charcoal outline-none appearance-none rounded-none">
-                        <option value="" disabled selected class="text-gray-400">Nature of Inquiry</option>
-                        <option value="bespoke">Bespoke Tailoring / Fitting</option>
-                        <option value="content">Content Collaboration / Sponsorship</option>
-                        <option value="press">Press & Media</option>
-                        <option value="other">General Inquiry</option>
-                    </select>
-                    <!-- Custom Arrow -->
-                    <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-charcoal">
-                        <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 9l-7 7-7-7"></path></svg>
-                    </div>
-                </div>
-
-                <div class="relative">
-                    <textarea id="message" rows="4" class="block w-full border-0 border-b border-charcoal/20 bg-transparent py-3 focus:ring-0 focus:border-charcoal transition-colors peer placeholder-transparent resize-none" placeholder="Message" required></textarea>
-                    <label for="message" class="absolute left-0 -top-3.5 text-xs text-charcoal/50 uppercase tracking-widest transition-all peer-placeholder-shown:text-base peer-placeholder-shown:top-3 peer-placeholder-shown:normal-case peer-focus:-top-3.5 peer-focus:text-xs peer-focus:uppercase">Your Message</label>
-                </div>
-
-                <div class="text-center pt-6">
-                    <button type="submit" class="border border-charcoal bg-charcoal text-ivory px-12 py-4 text-xs uppercase tracking-widest hover:bg-transparent hover:text-charcoal transition-all duration-500">
-                        Send Request
-                    </button>
-                </div>
-            </form>
+            <p class="text-xs uppercase tracking-[0.2em] text-gray">&copy; <span id="year"></span> Bekalu.</p>
         </div>
-    </section>
-
-    <footer class="py-12 bg-ivory text-center flex flex-col items-center">
-        <h2 class="text-3xl font-serif text-charcoal mb-6">ALAS.</h2>
-        
-        <div class="flex space-x-6 mb-8 text-charcoal/60">
-            <a href="#" class="hover:text-charcoal transition-colors"><span class="sr-only">Instagram</span><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.067.06 1.407.06 4.123v.08c0 2.643-.012 2.987-.06 4.043-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.067.048-1.407.06-4.123.06h-.08c-2.643 0-2.987-.012-4.043-.06-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.047-1.024-.06-1.379-.06-3.808v-.63c0-2.43.013-2.784.06-3.808.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772A4.902 4.902 0 015.45 2.525c.636-.247 1.363-.416 2.427-.465C8.901 2.013 9.256 2 11.685 2h.63zm-.081 1.802h-.468c-2.456 0-2.784.011-3.807.058-.975.045-1.504.207-1.857.344-.467.182-.8.398-1.15.748-.35.35-.566.683-.748 1.15-.137.353-.3.882-.344 1.857-.047 1.023-.058 1.351-.058 3.807v.468c0 2.456.011 2.784.058 3.807.045.975.207 1.504.344 1.857.182.466.399.8.748 1.15.35.35.683.566 1.15.748.353.137.882.3 1.857.344 1.054.048 1.37.058 4.041.058h.08c2.597 0 2.917-.01 3.96-.058.976-.045 1.505-.207 1.858-.344.466-.182.8-.398 1.15-.748.35-.35.566-.683.748-1.15.137-.353.3-.882.344-1.857.048-1.055.058-1.37.058-4.041v-.08c0-2.597-.01-2.917-.058-3.96-.045-.976-.207-1.505-.344-1.858a3.097 3.097 0 00-.748-1.15 3.098 3.098 0 00-1.15-.748c-.353-.137-.882-.3-1.857-.344-1.023-.047-1.351-.058-3.807-.058zM12 6.865a5.135 5.135 0 110 10.27 5.135 5.135 0 010-10.27zm0 1.802a3.333 3.333 0 100 6.666 3.333 3.333 0 000-6.666zm5.338-3.205a1.2 1.2 0 110 2.4 1.2 1.2 0 010-2.4z" clip-rule="evenodd" /></svg></a>
-            <a href="#" class="hover:text-charcoal transition-colors"><span class="sr-only">TikTok</span><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 2.23-.9 4.45-2.43 5.92-1.48 1.46-3.66 2.31-5.74 2.11-2.28-.18-4.38-1.4-5.54-3.32-1.01-1.65-1.25-3.69-.73-5.55.43-1.55 1.44-2.91 2.8-3.69 1.25-.74 2.76-.98 4.17-.79V15.4c-1.52.09-3.07.61-4.04 1.83-.54.67-.84 1.54-.86 2.42-.03 1.34.81 2.66 2.06 3.12 1.09.43 2.37.33 3.37-.28 1.48-.88 2.15-2.6 2.15-4.3.01-4.99.01-9.98.01-14.97-.02-.4-.02-.8-.02-1.2h4.03z"/></svg></a>
-            <a href="#" class="hover:text-charcoal transition-colors"><span class="sr-only">YouTube</span><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M19.812 5.418c.861.23 1.538.907 1.768 1.768C21.998 8.746 22 12 22 12s0 3.255-.418 4.814a2.504 2.504 0 0 1-1.768 1.768c-1.56.419-7.814.419-7.814.419s-6.255 0-7.814-.419a2.505 2.505 0 0 1-1.768-1.768C2 15.255 2 12 2 12s0-3.255.417-4.814a2.507 2.507 0 0 1 1.768-1.768C5.744 5 11.998 5 11.998 5s6.255 0 7.814.418zM10 15.464L15.65 12 10 8.536v6.928z" clip-rule="evenodd"/></svg></a>
-        </div>
-
-        <p class="text-xs tracking-[0.2em] uppercase text-charcoal/40">&copy; <span id="year"></span> ALAS by Bekalu. All rights reserved.</p>
     </footer>
 
     <script>
         // Set current year
         document.getElementById('year').textContent = new Date().getFullYear();
 
-        // Navbar Scroll Effect
+        // Navbar hidden on scroll down, show on scroll up
+        let lastScrollTop = 0;
         const navbar = document.getElementById('navbar');
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 50) {
-                navbar.classList.add('shadow-sm');
-                navbar.classList.remove('py-5');
-                navbar.classList.add('py-3');
+        
+        window.addEventListener('scroll', function() {
+            let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            if (scrollTop > lastScrollTop && scrollTop > 100) {
+                // Scroll down
+                navbar.style.transform = 'translateY(-100%)';
             } else {
-                navbar.classList.remove('shadow-sm');
-                navbar.classList.add('py-5');
-                navbar.classList.remove('py-3');
+                // Scroll up
+                navbar.style.transform = 'translateY(0)';
             }
-        });
+            lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
+        }, false);
 
-        // Mobile Menu Logic
-        const btn = document.getElementById('mobile-menu-btn');
-        const nav = document.getElementById('mobile-nav');
+        // Mobile Menu Toggle
+        const btn = document.getElementById('mobile-btn');
+        const menu = document.getElementById('mobile-menu');
         const spans = btn.querySelectorAll('span');
-        const mobileLinks = document.querySelectorAll('.mobile-link');
+        const links = document.querySelectorAll('.mobile-link');
         let isOpen = false;
 
         function toggleMenu() {
             isOpen = !isOpen;
             if (isOpen) {
-                nav.classList.remove('opacity-0', 'pointer-events-none');
-                nav.classList.add('opacity-100', 'pointer-events-auto');
+                menu.classList.remove('opacity-0', 'pointer-events-none');
+                menu.classList.add('opacity-100', 'pointer-events-auto');
                 
-                spans[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
-                spans[1].style.opacity = '0';
-                spans[2].style.transform = 'rotate(-45deg) translate(6px, -6px)';
+                spans[0].style.transform = 'rotate(45deg) translate(2px, 3px)';
+                spans[1].style.transform = 'rotate(-45deg) translate(2px, -3px)';
+                
+                // Switch button color for dark menu
+                spans.forEach(s => s.classList.replace('bg-black', 'bg-white'));
                 document.body.style.overflow = 'hidden';
             } else {
-                nav.classList.remove('opacity-100', 'pointer-events-auto');
-                nav.classList.add('opacity-0', 'pointer-events-none');
+                menu.classList.remove('opacity-100', 'pointer-events-auto');
+                menu.classList.add('opacity-0', 'pointer-events-none');
                 
                 spans[0].style.transform = 'none';
-                spans[1].style.opacity = '1';
-                spans[2].style.transform = 'none';
+                spans[1].style.transform = 'none';
+                
+                // Revert button color
+                spans.forEach(s => s.classList.replace('bg-white', 'bg-black'));
                 document.body.style.overflow = '';
             }
         }
 
         btn.addEventListener('click', toggleMenu);
-        mobileLinks.forEach(link => {
-            link.addEventListener('click', () => {
-                if(isOpen) toggleMenu();
-            });
-        });
+        links.forEach(link => link.addEventListener('click', () => { if(isOpen) toggleMenu(); }));
 
-        // Scroll Reveal Animation (Intersection Observer)
+        // Scroll Reveal Animation via Intersection Observer
         const revealElements = document.querySelectorAll('.reveal');
         const revealOptions = {
-            threshold: 0.1,
+            threshold: 0.15,
             rootMargin: "0px 0px -50px 0px"
         };
 
@@ -438,6 +420,13 @@
         }, revealOptions);
 
         revealElements.forEach(el => revealObserver.observe(el));
+
+        // Auto-expand textarea
+        const textarea = document.getElementById('message');
+        textarea.addEventListener('input', function() {
+            this.style.height = 'auto';
+            this.style.height = (this.scrollHeight) + 'px';
+        });
     </script>
 </body>
 </html>
